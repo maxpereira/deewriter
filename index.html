@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>deewriter</title>
+<script>
+function doTheDew() {
+	
+	// Clear existing input if going again
+	if (document.getElementById("text2").value != "") {
+		document.getElementById("text2").value = "";
+	}
+	
+	// Get input text and force to lowercase
+	inputText = document.getElementById("text1").value.toLowerCase();
+	
+	// Split to array for character parsing
+	var inArray = inputText.split("");
+	
+	// Iterate through each character and validate for existing emoji
+	inArray.forEach(function(e) {
+		if (isLetter(e.toString()) == true) {
+			document.getElementById("text2").value += ":regional_indicator_"+e+": ";
+		} else if (e == " ") {
+			document.getElementById("text2").value += "   ";
+		} else {
+			document.getElementById("text2").value += e;
+		} 
+	});
+	
+	// Copies text to clipboard automatically
+	copyText();
+}
+
+// Also stolen from StackOverflow
+function copyText() {
+  /* Get the text field */
+  var copyText = document.getElementById("text2");
+
+  /* Select the text field */
+  copyText.select();
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+}
+
+// Shamelessly stolen from StackOverflow but works nicely with no regex
+function isLetter(c) {
+  return c.toLowerCase() != c.toUpperCase();
+}
+</script>
+</head>
+<body>
+type in first box and hit button<br>
+output is automatically copied to clipboard when you click button<br><br>
+<textarea id="text1" rows="4" cols="50"></textarea><br><br>
+<input type="button" onclick="doTheDew();" value="do the dew"></input><br><br>
+<br>
+<textarea id="text2" rows="4" cols="50" onclick="this.focus();this.select();" readonly="readonly"></textarea>
+</body>
+</html>
